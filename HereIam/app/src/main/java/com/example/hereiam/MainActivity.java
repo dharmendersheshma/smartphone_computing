@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
             unregisterReceiver(this);
 
             for (ScanResult scanResult : results) {
-                arrayList.add(scanResult.SSID + " - " + scanResult.capabilities);
+                arrayList.add(scanResult.SSID + " - " + scanResult.level);
                 adapter.notifyDataSetChanged();
             }
         }
