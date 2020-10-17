@@ -37,8 +37,21 @@ public class MainActivity extends AppCompatActivity {
     List<ScanResult> results;
     WifiReceiver wifiReceiver;
     Button buttonScan;
-    String ssid = "MrJio";  // Set ssid name
-    int thresold = -40;     // set thresold for ssid to check the current strength of sigal
+
+    String ssid1 = "Give ssid 1"; //Set ssid 1
+    String ssid2 = "Give ssid 2"; //Set ssid 2
+    String ssid3 = "Give ssid 3"; //Set ssid 3
+
+    int threshold1 = 1; //Set signal threshold for ssid 1
+    int threshold2 = 1;  //Set signal threshold for ssid 2
+    int threshold3 = 1;  //Set signal threshold for ssid 3
+
+    //Current signal strength for above three ssids
+    int sig1;
+    int sig2;
+    int sig3;
+
+    int error = 5; //error range for signal (threshold-5 to threshold+5)
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,14 +110,34 @@ public class MainActivity extends AppCompatActivity {
             }
             else
             {
+                int count = 0; // to check all three ssids which we require are available
                 for (ScanResult scanResult : results) {
-                    if(ssid.equals(scanResult.SSID) && thresold < scanResult.level)   //Checking our known ssid defined above as "ssid"
+
+                    if(ssid1.equals(scanResult.SSID))   //Checking our known ssid defined above as "ssid1"
                     {
-                        sendNotification(this); //Give notification to user
-
-                        Toast.makeText(getApplicationContext(),"Check notification of your phone!",Toast.LENGTH_SHORT).show();  //Toast
+                        sig1 = scanResult.level;   // set current signal strength of ssid1
+                        count++;
                     }
+                    else if(ssid2.equals(scanResult.SSID))   //Checking our known ssid defined above as "ssid2"
+                    {
+                        sig2 = scanResult.level;  // set current signal strength of ssid2
+                        count++;
+                    }
+                    else if(ssid3.equals(scanResult.SSID))   //Checking our known ssid defined above as "ssid3"
+                    {
+                        sig3 = scanResult.level;  // set current signal strength of ssid3
+                        count++;
+                    }
+                    if(count==3)  // if all there required wifi access points are available
+                    {
+                        boolean check = check_location(threshold1, threshold2, threshold3, sig1, sig2, sig3); // check if we are at required location
+                        if(check)
+                        {
+                            sendNotification(this); //Give notification to user
 
+                            Toast.makeText(getApplicationContext(),"Trilocation idetification!",Toast.LENGTH_SHORT).show();  //Toast
+                        }
+                    }
                     wifiList.add("Wifi SSID: " + scanResult.SSID + "\n" + "Wifi signal strength: " +  scanResult.level + " dBm");  //Add available access points
 
                     adapter.notifyDataSetChanged();   // Change the list on new scan
@@ -112,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
-    // Class to give notification to user
+    // Function to give notification to user
     public void sendNotification(WifiReceiver view) {
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -128,9 +161,31 @@ public class MainActivity extends AppCompatActivity {
 
         builder = builder
                 .setSmallIcon(R.drawable.ic_launcher_background)
-                .setContentText("Hey you are in living room! Do you want to turn TV on?")
+                .setContentText("Trilateration notifiction....Hey you are in living room! Do you want to turn TV on?")
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setAutoCancel(true);
         notificationManager.notify(01, builder.build());
+    }
+
+    //Trilateration function
+    public boolean check_location(int threshold1, int threshold2, int threshold3, int sig1, int sig2, int sig3){
+        int flag1 = 0, flag2 = 0, flag3 = 0;
+        if((sig1 < (threshold1 + error)) && (sig1 > (threshold1 - error)))
+        {
+            flag1 = 1; // set flag if ssid1 have strength within range of error of 5 dBm plus minus threshold
+        }
+        if((sig2 < (threshold2 + error)) && (sig2 > (threshold2 - error)))
+        {
+            flag2 = 1; // set flag if ssid2 have strength within range of error of 5 dBm plus minus threshold
+        }
+        if((sig3 < (threshold3 + error)) && (sig3 > (threshold3 - error)))
+        {
+            flag3 = 1; // set flag if ssid3 have strength within range of error of 5 dBm plus minus threshold
+        }
+        if(flag1 ==1 && flag2==1 && flag3==1) // check trilateration condition
+        {
+            return true;  // location identified
+        }
+        return false;  // location not identified
     }
 }
