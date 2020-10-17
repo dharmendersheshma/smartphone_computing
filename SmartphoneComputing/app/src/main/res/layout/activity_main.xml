@@ -28,6 +28,6 @@
         android:layout_gravity="bottom"
         android:layout_margin="15dp"
         android:background="@android:color/holo_blue_light"
-        android:text="Scan WiFi"/>
+        android:text="Auto Mode"/>
 
 </LinearLayout>
