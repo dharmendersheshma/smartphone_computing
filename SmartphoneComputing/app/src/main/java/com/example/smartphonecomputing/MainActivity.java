@@ -54,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
 
     int error = 5; //error range for signal (threshold-5 to threshold+5)
 
+    Handler handler = new Handler();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,15 +72,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //auto scan with 5 second sleep time
-                while(true) {
-                    Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        public void run() {
-                            // Actions to do after 5 seconds
-                            scanWifi();  //start scan
-                        }
-                    }, 5000);
-                }
+                startRepeating();
             }
         });
 
@@ -99,6 +93,22 @@ public class MainActivity extends AppCompatActivity {
 
         scanWifi();  //start scan
     }
+
+    public void startRepeating() {
+        //mHandler.postDelayed(mToastRunnable, 5000);
+        auto_scan.run();
+    }
+    public void stopRepeating(View view) {
+        handler.removeCallbacks(auto_scan);
+    }
+    private Runnable auto_scan = new Runnable() {
+        @Override
+        public void run() {
+            scanWifi();  //start scan
+            Toast.makeText(MainActivity.this, "Scanning..", Toast.LENGTH_SHORT).show();
+            handler.postDelayed(this, 5000);
+        }
+    };
 
     void scanWifi(){
         wifiList.clear();  //Clear list on each new scan
@@ -138,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
                         sig3 = scanResult.level;  // set current signal strength of ssid3
                         count++;
                     }
-                    if(count==3)  // if all there required wifi access points are available
+                    if(count==3)  // if all three required wifi access points are available
                     {
                         boolean check = check_location(threshold1, threshold2, threshold3, sig1, sig2, sig3); // check if we are at required location
                         if(check)

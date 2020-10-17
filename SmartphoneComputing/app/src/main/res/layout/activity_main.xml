@@ -30,4 +30,13 @@
         android:background="@android:color/holo_blue_light"
         android:text="Auto Mode"/>
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:layout_margin="15dp"
+        android:background="@android:color/holo_blue_light"
+        android:text="Stop scanning"
+        android:onClick="stopRepeating"/>
+
 </LinearLayout>
