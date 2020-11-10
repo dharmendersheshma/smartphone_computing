@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".NewActivity">
 
     <TextView
         android:layout_width="match_parent"
@@ -21,33 +21,33 @@
         android:layout_height="312dp"
         android:layout_weight="0.97"/>
 
-    <Button
-        android:id="@+id/user_selection"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_gravity="bottom"
-        android:layout_marginTop="15dp"
-        android:layout_marginHorizontal="15dp"
-        android:background="@android:color/holo_blue_light"
-        android:text="Select Wifi Identifiers"/>
-
-    <Button
-        android:id="@+id/scanBtn"
+    <EditText
+        android:id="@+id/inputnumber"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="bottom"
         android:layout_margin="15dp"
-        android:background="@android:color/holo_blue_light"
-        android:text="Auto Mode"/>
+        android:hint="Optional: Input Error. Default(5)"
+        android:inputType="number" />
 
     <Button
+        android:id="@+id/OK_buutton"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="bottom"
         android:layout_marginBottom="15dp"
         android:layout_marginHorizontal="15dp"
         android:background="@android:color/holo_blue_light"
-        android:text="Stop scanning"
-        android:onClick="stopRepeating"/>
+        android:text="OK"/>
+
+    <Button
+        android:id="@+id/exit_buutton"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="15dp"
+        android:layout_marginHorizontal="15dp"
+        android:background="@android:color/holo_blue_light"
+        android:text="EXIT"/>
 
 </LinearLayout>

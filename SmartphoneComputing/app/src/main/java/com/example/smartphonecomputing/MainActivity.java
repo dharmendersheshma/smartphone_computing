@@ -38,21 +38,22 @@ public class MainActivity extends AppCompatActivity {
     List<ScanResult> results;
     WifiReceiver wifiReceiver;
     Button buttonScan;
+    Button buttonSelectWifi;
 
-    String ssid1 = "Give ssid 1"; //Set ssid 1
-    String ssid2 = "Give ssid 2"; //Set ssid 2
-    String ssid3 = "Give ssid 3"; //Set ssid 3
+    static String ssid1 = "Give ssid 1"; //Set ssid 1
+    static String ssid2 = "Give ssid 2"; //Set ssid 2
+    static String ssid3 = "Give ssid 3"; //Set ssid 3
 
-    int threshold1 = 1; //Set signal threshold for ssid 1
-    int threshold2 = 1;  //Set signal threshold for ssid 2
-    int threshold3 = 1;  //Set signal threshold for ssid 3
+    static int threshold1 = 1; //Set signal threshold for ssid 1
+    static int threshold2 = 1;  //Set signal threshold for ssid 2
+    static int threshold3 = 1;  //Set signal threshold for ssid 3
 
     //Current signal strength for above three ssids
     int sig1;
     int sig2;
     int sig3;
 
-    int error = 5; //error range for signal (threshold-5 to threshold+5)
+    static int error = 5; //error range for signal (threshold-5 to threshold+5)
 
     Handler handler = new Handler();
 
@@ -66,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
                 new String[]{Manifest.permission.ACCESS_FINE_LOCATION }, 1);
 
         buttonScan = findViewById(R.id.scanBtn);
+        buttonSelectWifi = findViewById(R.id.user_selection);
 
         //Button click listner for scanning wifi
         buttonScan.setOnClickListener(new View.OnClickListener() {
@@ -76,6 +78,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Button click listner for selecting three wifi points
+        buttonSelectWifi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openNewActivity();
+            }
+        });
 
         listView = findViewById(R.id.myList);  // list which we will polpulate by wifi access points
 
@@ -92,6 +101,11 @@ public class MainActivity extends AppCompatActivity {
         listView.setAdapter(adapter);  // set adapter on our created list
 
         scanWifi();  //start scan
+    }
+
+    public void openNewActivity(){
+        Intent intent = new Intent(this, NewActivity.class);
+        startActivity(intent);
     }
 
     public void startRepeating() {
