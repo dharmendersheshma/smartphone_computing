@@ -162,10 +162,7 @@ public class NewActivity extends AppCompatActivity {
 
             if(results.isEmpty())   //if there is no wifi hotspot in area
             {
-                wifiList.add("Wifi SSID: " + " joky" + "\n" + "Wifi signal strength: " + 90);
-                wifiList.add("Wifi SSID: " + " __joky" + "\n" + "Wifi signal strength: " + 80);
-                wifiList.add("Wifi SSID: " + " joky__" + "\n" + "Wifi signal strength: " + 50);
-                wifiList.add("Wifi SSID: " + " _joky_" + "\n" + "Wifi signal strength: " + 40);
+                wifiList.add("No Wifi available!");
                 adapter.notifyDataSetChanged();
             }
             else
