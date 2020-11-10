@@ -30,23 +30,43 @@
         android:hint="Optional: Input Error. Default(5)"
         android:inputType="number" />
 
-    <Button
-        android:id="@+id/OK_buutton"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_gravity="bottom"
-        android:layout_marginBottom="15dp"
-        android:layout_marginHorizontal="15dp"
-        android:background="@android:color/holo_blue_light"
-        android:text="OK"/>
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/location1Save"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="left"
+            android:layout_marginTop="15dp"
+            android:layout_weight="0.5"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="15dp"
+            android:background="@android:color/holo_blue_light"
+            android:text="Save Location 1"/>
+
+        <Button
+            android:id="@+id/location2Save"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="right"
+            android:layout_marginTop="15dp"
+            android:layout_weight="0.5"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="15dp"
+            android:background="@android:color/holo_blue_light"
+            android:text="Save Location 2"/>
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/exit_buutton"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="bottom"
-        android:layout_marginBottom="15dp"
-        android:layout_marginHorizontal="15dp"
+        android:layout_margin="15dp"
         android:background="@android:color/holo_blue_light"
         android:text="EXIT"/>
 

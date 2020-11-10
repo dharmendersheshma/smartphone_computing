@@ -8,6 +8,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -27,6 +28,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.example.smartphonecomputing.MainActivity.pref;
+
 public class NewActivity extends AppCompatActivity {
 
     ArrayAdapter<String> adapter;
@@ -35,7 +38,8 @@ public class NewActivity extends AppCompatActivity {
     ListView listView;
     List<ScanResult> results;
     WifiReceiver wifiReceiver;
-    Button buttonOK;
+    Button buttonL1;
+    Button buttonL2;
     Button buttonExit;
     EditText ERROR;
 
@@ -44,6 +48,7 @@ public class NewActivity extends AppCompatActivity {
 
     String[] sd = new String[3];
     String[] td = new String[3];
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,36 +59,68 @@ public class NewActivity extends AppCompatActivity {
         ActivityCompat.requestPermissions(NewActivity.this,
                 new String[]{Manifest.permission.ACCESS_FINE_LOCATION }, 1);
 
+
         ERROR = findViewById(R.id.inputnumber);
 
-        buttonOK = findViewById(R.id.OK_buutton);
+        buttonL1 = findViewById(R.id.location1Save);
         //Button click listner for scanning wifi
-        buttonOK.setOnClickListener(new View.OnClickListener() {
+        buttonL1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(count==3) {
-                    MainActivity.ssid1 = sd[0];
-                    MainActivity.ssid2 = sd[1];
-                    MainActivity.ssid3 = sd[2];
 
-                    MainActivity.threshold1 = Integer.parseInt(td[0]);
-                    MainActivity.threshold2 = Integer.parseInt(td[1]);
-                    MainActivity.threshold3 = Integer.parseInt(td[2]);
+                    SharedPreferences.Editor editor = pref.edit();
+                    editor.putString("idI1", sd[0]);
+                    editor.putInt("tdI1", Integer.parseInt(td[0]));
+                    editor.putString("idI2", sd[1]);
+                    editor.putInt("tdI2", Integer.parseInt(td[1]));
+                    editor.putString("idI3", sd[2]);
+                    editor.putInt("tdI3", Integer.parseInt(td[2]));
 
                     err = ERROR.getText().toString();
                     if(TextUtils.isEmpty(err))
                     {
-                        MainActivity.error = 5;
+                        editor.putInt("errorI", 5);
                     }
                     else {
-                        MainActivity.error = Integer.parseInt(err);
+                        editor.putInt("errorI", Integer.parseInt(err));
                     }
-
+                    editor.commit();
+                    count = 0;
                     finish();
                 }
-                else if(count==3)
-                {
-                    Toast.makeText(NewActivity.this, "Input error for signal strength", Toast.LENGTH_LONG).show();
+                else{
+                    Toast.makeText(NewActivity.this, "Select 3 different access points or click EXIT to return to home screen", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        buttonL2 = findViewById(R.id.location2Save);
+        //Button click listner for scanning wifi
+        buttonL2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(count==3) {
+
+                    SharedPreferences.Editor editor = pref.edit();
+                    editor.putString("idII1", sd[0]);
+                    editor.putInt("tdII1", Integer.parseInt(td[0]));
+                    editor.putString("idII2", sd[1]);
+                    editor.putInt("tdII2", Integer.parseInt(td[1]));
+                    editor.putString("idII3", sd[2]);
+                    editor.putInt("tdII3", Integer.parseInt(td[2]));
+
+                    err = ERROR.getText().toString();
+                    if(TextUtils.isEmpty(err))
+                    {
+                        editor.putInt("errorII", 5);
+                    }
+                    else {
+                        editor.putInt("errorII", Integer.parseInt(err));
+                    }
+                    editor.commit();
+                    count = 0;
+                    finish();
                 }
                 else{
                     Toast.makeText(NewActivity.this, "Select 3 different access points or click EXIT to return to home screen", Toast.LENGTH_LONG).show();
