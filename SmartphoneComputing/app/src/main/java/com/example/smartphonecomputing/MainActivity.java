@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     WifiReceiver wifiReceiver;
     Button buttonScan;
     Button buttonSelectWifi;
+    Button buttonInfo;
 
     static String ssid1 = "Give ssid 1"; //Set ssid 1
     static String ssid2 = "Give ssid 2"; //Set ssid 2
@@ -68,6 +69,17 @@ public class MainActivity extends AppCompatActivity {
 
         buttonScan = findViewById(R.id.scanBtn);
         buttonSelectWifi = findViewById(R.id.user_selection);
+        buttonInfo = findViewById(R.id.saved_info);
+
+        buttonInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MainActivity.this, "SSID1: " + ssid1 + "strength: " + threshold1 + "dBm" + "\n" +
+                        "SSID2: " + ssid2 + "strength: " + threshold2 + "dBm" + "\n" +
+                        "SSID3: " + ssid3 + "strength: " + threshold3 + "dBm" + "\n" +
+                        "Error: " + error, Toast.LENGTH_LONG).show();
+            }
+        });
 
         //Button click listner for scanning wifi
         buttonScan.setOnClickListener(new View.OnClickListener() {

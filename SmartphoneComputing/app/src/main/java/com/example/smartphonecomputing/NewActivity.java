@@ -116,7 +116,7 @@ public class NewActivity extends AppCompatActivity {
                     String s = m.group(1);
                     sd[count] = s;
                 }
-                Pattern pp = Pattern.compile( "[\\n\\r].*Wifi signal strength:\\s*([^\\n\\r]*)" );
+                Pattern pp = Pattern.compile( "[\\n\\r].*Wifi signal strength in dBm:\\s*([^\\n\\r]*)" );
                 Matcher mm = pp.matcher( selectedFromList );
                 if ( mm.find() ) {
                     String s = mm.group(1);
@@ -124,7 +124,7 @@ public class NewActivity extends AppCompatActivity {
                 }
 
                 count++;
-                if (count == 3 && ERROR!=null) {
+                if (count == 3) {
                     listView.setOnItemClickListener(null);
                 }
             }
@@ -168,7 +168,7 @@ public class NewActivity extends AppCompatActivity {
             else
             {
                 for (ScanResult scanResult : results) {
-                    wifiList.add("Wifi SSID: " + scanResult.SSID + "\n" + "Wifi signal strength: " +  scanResult.level + " dBm");  //Add available access points
+                    wifiList.add("Wifi SSID: " + scanResult.SSID + "\n" + "Wifi signal strength in dBm: " +  scanResult.level);  //Add available access points
                     adapter.notifyDataSetChanged();   // Change the list on new scan
                 }
             }
