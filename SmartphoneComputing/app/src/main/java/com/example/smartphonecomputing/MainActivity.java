@@ -145,13 +145,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        ssidI1 = pref.getString("idI1", null); // getting String; //Set ssid 1
-        ssidI2 = pref.getString("idI2", null);//Set ssid 2
-        ssidI3 = pref.getString("idI3", null); //Set ssid 3
+        ssidI1 = pref.getString("idI1", "Dummy"); // getting String; //Set ssid 1
+        ssidI2 = pref.getString("idI2", "Dummy");//Set ssid 2
+        ssidI3 = pref.getString("idI3", "Dummy"); //Set ssid 3
 
-        ssidII1 = pref.getString("idII1", null); //Set ssid 1
-        ssidII2 = pref.getString("idII2", null); //Set ssid 2
-        ssidII3 = pref.getString("idII3", null); //Set ssid 3
+        ssidII1 = pref.getString("idII1", "Dummy"); //Set ssid 1
+        ssidII2 = pref.getString("idII2", "Dummy"); //Set ssid 2
+        ssidII3 = pref.getString("idII3", "Dummy"); //Set ssid 3
 
         thresholdI1 = pref.getInt("tdI1", 0); // getting Integer
         thresholdI2 = pref.getInt("tdI2", 0); // getting Integer
