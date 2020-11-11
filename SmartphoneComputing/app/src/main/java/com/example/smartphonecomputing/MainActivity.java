@@ -113,6 +113,9 @@ public class MainActivity extends AppCompatActivity {
         buttonScan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(MainActivity.this, "Scanning..", Toast.LENGTH_SHORT).show();
+                outside1 = true;
+                outside2 = true;
                 //auto scan with 5 second sleep time
                 startRepeating();
             }
@@ -184,7 +187,6 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void run() {
             scanWifi();  //start scan
-            Toast.makeText(MainActivity.this, "Scanning..", Toast.LENGTH_SHORT).show();
             handler.postDelayed(this, 5000);
         }
     };
@@ -243,14 +245,13 @@ public class MainActivity extends AppCompatActivity {
                         sigII3 = scanResult.level;  // set current signal strength of ssid3
                         count2++;
                     }
-                    int f1 = 0;
+
                     if(count1==3)  // if all three required wifi access points are available
                     {
-                        fflag = 1;
-                        f1 = 1;
                         boolean check = check_location(thresholdI1, thresholdI2, thresholdI3, sigI1, sigI2, sigI3, ErrorI); // check if we are at required location
                         if(check && outside1)
                         {
+                            fflag = 1;
                             sendNotification(this); //Give notification to user
                             outside1 = false;
                             Toast.makeText(getApplicationContext(),"Location 1 idetified!",Toast.LENGTH_SHORT).show();  //Toast
@@ -258,21 +259,26 @@ public class MainActivity extends AppCompatActivity {
                     }
                     if(count2==3)  // if all three required wifi access points are available
                     {
-                        fflag = 2;
-                        f1 = 1;
                         boolean check = check_location(thresholdII1, thresholdII2, thresholdII3, sigII1, sigII2, sigII3, ErrorII); // check if we are at required location
                         if(check && outside2)
                         {
+                            fflag = 2;
                             sendNotification(this); //Give notification to user
                             outside2 = false;
                             Toast.makeText(getApplicationContext(),"Location 2 idetified!",Toast.LENGTH_SHORT).show();  //Toast
                         }
                     }
-                    if(f1==0)
+                    boolean check1 = check_location(thresholdI1, thresholdI2, thresholdI3, sigI1, sigI2, sigI3, ErrorI);
+                    boolean check2 = check_location(thresholdII1, thresholdII2, thresholdII3, sigII1, sigII2, sigII3, ErrorII);
+                    if(!check1)
                     {
                         outside1 = true;
+                    }
+                    if(!check2)
+                    {
                         outside2 = true;
                     }
+
                     wifiList.add("Wifi SSID: " + scanResult.SSID + "\n" + "Wifi signal strength: " +  scanResult.level + " dBm");  //Add available access points
 
                     adapter.notifyDataSetChanged();   // Change the list on new scan
@@ -293,14 +299,15 @@ public class MainActivity extends AppCompatActivity {
         } else {
             builder = new NotificationCompat.Builder(getApplicationContext());
         }
-        if(fflag == 1) {
+        if(fflag == 1)
+        {
             builder = builder
                     .setSmallIcon(R.drawable.ic_launcher_background)
                     .setContentText("Trilateration notifiction....You are in Balcony! Do you want to turn on Music?")
                     .setDefaults(Notification.DEFAULT_ALL)
                     .setAutoCancel(true);
         }
-        else
+        if(fflag==2)
         {
             builder = builder
                     .setSmallIcon(R.drawable.ic_launcher_background)
