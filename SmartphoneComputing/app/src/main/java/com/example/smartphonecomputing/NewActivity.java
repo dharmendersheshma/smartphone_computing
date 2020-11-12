@@ -42,8 +42,10 @@ public class NewActivity extends AppCompatActivity {
     Button buttonL2;
     Button buttonExit;
     EditText ERROR;
+    EditText EditNot;
 
     String err;
+    String not;
     int count = 0;
 
     String[] sd = new String[3];
@@ -61,6 +63,7 @@ public class NewActivity extends AppCompatActivity {
 
 
         ERROR = findViewById(R.id.inputnumber);
+        EditNot = findViewById(R.id.inputnoti);
 
         buttonL1 = findViewById(R.id.location1Save);
         //Button click listner for scanning wifi
@@ -84,6 +87,15 @@ public class NewActivity extends AppCompatActivity {
                     }
                     else {
                         editor.putInt("errorI", Integer.parseInt(err));
+                    }
+
+                    not = EditNot.getText().toString();
+                    if(TextUtils.isEmpty(not))
+                    {
+                        editor.putString("notification1", "Location 1 Identified!");
+                    }
+                    else {
+                        editor.putString("notification1", not);
                     }
                     editor.commit();
                     count = 0;
@@ -117,6 +129,15 @@ public class NewActivity extends AppCompatActivity {
                     }
                     else {
                         editor.putInt("errorII", Integer.parseInt(err));
+                    }
+
+                    not = EditNot.getText().toString();
+                    if(TextUtils.isEmpty(not))
+                    {
+                        editor.putString("notification2", "Location 2 Identified!");
+                    }
+                    else {
+                        editor.putString("notification2", not);
                     }
                     editor.commit();
                     count = 0;

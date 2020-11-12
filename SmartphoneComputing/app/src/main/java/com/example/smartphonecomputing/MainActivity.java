@@ -45,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
     public static final String MyPREFERENCES = "WifiInfo" ;
     static SharedPreferences pref;
 
+    static String not1;
+    static String not2;
+
     static String ssidI1;
     static String ssidI2;
     static String ssidI3;
@@ -101,10 +104,12 @@ public class MainActivity extends AppCompatActivity {
                         "SSIDI2: " + ssidI2 + " strength: " + thresholdI2 + "dBm" + "\n" +
                         "SSIDI3: " + ssidI3 + " strength: " + thresholdI3 + "dBm" + "\n" +
                         "ErrorI: " + ErrorI + "\n" +
+                        "NotifI: " + not1 +"\n" +
                         "SSIDII1: " + ssidII1 + " strength: " + thresholdII1 + "dBm" + "\n" +
                         "SSIDII2: " + ssidII2 + " strength: " + thresholdII2 + "dBm" + "\n" +
                         "SSIDII3: " + ssidII3 + " strength: " + thresholdII3 + "dBm" + "\n" +
-                        "ErrorII: " + ErrorII, Toast.LENGTH_LONG).show();
+                        "ErrorII: " + ErrorII + "\n" +
+                        "NotifII: " + not2, Toast.LENGTH_LONG).show();
             }
         });
 
@@ -165,6 +170,9 @@ public class MainActivity extends AppCompatActivity {
 
         ErrorI = pref.getInt("errorI", 5); // getting Integer
         ErrorII = pref.getInt("errorII", 5); // getting Integer
+
+        not1 = pref.getString("notification1", "Location 1 Identified!");
+        not2 = pref.getString("notification2", "Location 2 Identified!");
     }
 
     public void openNewActivity(){
@@ -299,7 +307,7 @@ public class MainActivity extends AppCompatActivity {
 
         builder = builder
                 .setSmallIcon(R.drawable.ic_launcher_background)
-                .setContentText("Trilateration notifiction....You are in Balcony! Do you want to turn on Music?")
+                .setContentText(not1)
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setAutoCancel(true);
 
@@ -323,7 +331,7 @@ public class MainActivity extends AppCompatActivity {
 
         builder = builder
                 .setSmallIcon(R.drawable.ic_launcher_background)
-                .setContentText("Trilateration notifiction....Hey you are in living room! Do you want to turn TV on?")
+                .setContentText(not2)
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setAutoCancel(true);
 
