@@ -254,6 +254,7 @@ public class MainActivity extends AppCompatActivity {
                             fflag = 1;
                             sendNotification(this); //Give notification to user
                             outside1 = false;
+			    fflag = 0;
                             Toast.makeText(getApplicationContext(),"Location 1 idetified!",Toast.LENGTH_SHORT).show();  //Toast
                         }
                     }
@@ -265,6 +266,7 @@ public class MainActivity extends AppCompatActivity {
                             fflag = 2;
                             sendNotification(this); //Give notification to user
                             outside2 = false;
+			    fflag = 0;
                             Toast.makeText(getApplicationContext(),"Location 2 idetified!",Toast.LENGTH_SHORT).show();  //Toast
                         }
                     }
@@ -315,7 +317,6 @@ public class MainActivity extends AppCompatActivity {
                     .setDefaults(Notification.DEFAULT_ALL)
                     .setAutoCancel(true);
         }
-        fflag = 0;
         notificationManager.notify(01, builder.build());
     }
 
