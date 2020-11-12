@@ -73,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
     static int ErrorI;
     static int ErrorII;
 
-    int fflag = -1;
     boolean outside1 = true;
     boolean outside2 = true;
     Handler handler = new Handler();
@@ -220,27 +219,27 @@ public class MainActivity extends AppCompatActivity {
                         sigI1 = scanResult.level;   // set current signal strength of ssid1
                         count1++;
                     }
-                    else if(ssidI2.equals(scanResult.SSID))   //Checking our known ssid defined above as "ssid2"
+                    if(ssidI2.equals(scanResult.SSID))   //Checking our known ssid defined above as "ssid2"
                     {
                         sigI2 = scanResult.level;  // set current signal strength of ssid2
                         count1++;
                     }
-                    else if(ssidI3.equals(scanResult.SSID))   //Checking our known ssid defined above as "ssid3"
+                    if(ssidI3.equals(scanResult.SSID))   //Checking our known ssid defined above as "ssid3"
                     {
                         sigI3 = scanResult.level;  // set current signal strength of ssid3
                         count1++;
                     }
-                    else if(ssidII1.equals(scanResult.SSID))   //Checking our known ssid defined above as "ssid1"
+                    if(ssidII1.equals(scanResult.SSID))   //Checking our known ssid defined above as "ssid1"
                     {
                         sigII1 = scanResult.level;   // set current signal strength of ssid1
                         count2++;
                     }
-                    else if(ssidII2.equals(scanResult.SSID))   //Checking our known ssid defined above as "ssid2"
+                    if(ssidII2.equals(scanResult.SSID))   //Checking our known ssid defined above as "ssid2"
                     {
                         sigII2 = scanResult.level;  // set current signal strength of ssid2
                         count2++;
                     }
-                    else if(ssidII3.equals(scanResult.SSID))   //Checking our known ssid defined above as "ssid3"
+                    if(ssidII3.equals(scanResult.SSID))   //Checking our known ssid defined above as "ssid3"
                     {
                         sigII3 = scanResult.level;  // set current signal strength of ssid3
                         count2++;
@@ -251,10 +250,8 @@ public class MainActivity extends AppCompatActivity {
                         boolean check = check_location(thresholdI1, thresholdI2, thresholdI3, sigI1, sigI2, sigI3, ErrorI); // check if we are at required location
                         if(check && outside1)
                         {
-                            fflag = 1;
-                            sendNotification(this); //Give notification to user
+                            sendNotification1(this); //Give notification to user
                             outside1 = false;
-			    fflag = 0;
                             Toast.makeText(getApplicationContext(),"Location 1 idetified!",Toast.LENGTH_SHORT).show();  //Toast
                         }
                     }
@@ -263,10 +260,8 @@ public class MainActivity extends AppCompatActivity {
                         boolean check = check_location(thresholdII1, thresholdII2, thresholdII3, sigII1, sigII2, sigII3, ErrorII); // check if we are at required location
                         if(check && outside2)
                         {
-                            fflag = 2;
-                            sendNotification(this); //Give notification to user
+                            sendNotification2(this); //Give notification to user
                             outside2 = false;
-			    fflag = 0;
                             Toast.makeText(getApplicationContext(),"Location 2 idetified!",Toast.LENGTH_SHORT).show();  //Toast
                         }
                     }
@@ -289,7 +284,7 @@ public class MainActivity extends AppCompatActivity {
         }
     };
     // Function to give notification to user
-    public void sendNotification(WifiReceiver view) {
+    public void sendNotification1(WifiReceiver view) {
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationCompat.Builder builder = null;
@@ -301,22 +296,37 @@ public class MainActivity extends AppCompatActivity {
         } else {
             builder = new NotificationCompat.Builder(getApplicationContext());
         }
-        if(fflag == 1)
-        {
-            builder = builder
-                    .setSmallIcon(R.drawable.ic_launcher_background)
-                    .setContentText("Trilateration notifiction....You are in Balcony! Do you want to turn on Music?")
-                    .setDefaults(Notification.DEFAULT_ALL)
-                    .setAutoCancel(true);
+
+        builder = builder
+                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setContentText("Trilateration notifiction....You are in Balcony! Do you want to turn on Music?")
+                .setDefaults(Notification.DEFAULT_ALL)
+                .setAutoCancel(true);
+
+        notificationManager.notify(01, builder.build());
+    }
+
+    // Function to give notification to user
+    public void sendNotification2(WifiReceiver view) {
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationCompat.Builder builder = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel notificationChannel = new NotificationChannel("ID", "Name", importance);
+            notificationManager.createNotificationChannel(notificationChannel);
+            builder = new NotificationCompat.Builder(getApplicationContext(), notificationChannel.getId());
+        } else {
+            builder = new NotificationCompat.Builder(getApplicationContext());
         }
-        if(fflag==2)
-        {
-            builder = builder
-                    .setSmallIcon(R.drawable.ic_launcher_background)
-                    .setContentText("Trilateration notifiction....Hey you are in living room! Do you want to turn TV on?")
-                    .setDefaults(Notification.DEFAULT_ALL)
-                    .setAutoCancel(true);
-        }
+
+
+        builder = builder
+                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setContentText("Trilateration notifiction....Hey you are in living room! Do you want to turn TV on?")
+                .setDefaults(Notification.DEFAULT_ALL)
+                .setAutoCancel(true);
+
         notificationManager.notify(01, builder.build());
     }
 
